@@ -1,0 +1,24 @@
+MOBILE-OPTIMIZED-PORTFOLIO-WEBSITE/
+├── index.html
+├── file-upload.html
+├── copy-paste.html
+├── manifest.json
+├── sw.js
+├── .gitignore
+├── README.md
+├── docs/
+│   ├── SETUP.md
+│   ├── USAGE.md
+│   └── FEATURES.md
+├── assets/
+│   ├── icons/
+│   │   ├── icon-192.png
+│   │   ├── icon-512.png
+│   │   ├── icon-maskable-192.png
+│   │   └── icon-maskable-512.png
+│   ├── images/
+│   │   ├── screenshot-1.png
+│   │   ├── screenshot-2.png
+│   │   └── og-image.png
+│   └── css/ (optional - if split from HTML)
+└── _config.yml

@@ -1,0 +1,5 @@
+// Copy to clipboard
+await navigator.clipboard.writeText('text');
+
+// Read from clipboard
+const text = await navigator.clipboard.readText();

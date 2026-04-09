@@ -1,0 +1,12 @@
+project/
+├── index.html           # Main portfolio
+├── file-upload.html     # File upload tool
+├── copy-paste.html      # Copy & paste tools
+├── manifest.json        # PWA manifest
+├── sw.js               # Service worker
+├── mobile-optimization.js  # Mobile utils
+├── images/
+│   ├── icon-192.png
+│   ├── icon-512.png
+│   └── screenshots/
+└── README.md

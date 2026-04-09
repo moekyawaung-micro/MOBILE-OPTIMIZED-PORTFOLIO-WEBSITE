@@ -1,0 +1,21 @@
+# Step 1: Clone or create repository
+git clone https://github.com/moekyawaung-micro/MOBILE-OPTIMIZED-PORTFOLIO-WEBSITE.git
+cd MOBILE-OPTIMIZED-PORTFOLIO-WEBSITE
+
+# Step 2: Initialize git (if needed)
+git init
+git add .
+git commit -m "Initial commit: Mobile-optimized portfolio"
+
+# Step 3: Add remote
+git remote add origin https://github.com/moekyawaung-micro/MOBILE-OPTIMIZED-PORTFOLIO-WEBSITE.git
+
+# Step 4: Push to main branch
+git branch -M main
+git push -u origin main
+
+# Step 5: Enable GitHub Pages
+# Go to Settings > Pages > Select "main" branch > Save
+
+# Step 6: Your site is live at:
+# https://moekyawaung-micro.github.io/MOBILE-OPTIMIZED-PORTFOLIO-WEBSITE

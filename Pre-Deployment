@@ -1,0 +1,55 @@
+# Pre-Deployment Testing Checklist
+
+## Mobile Devices
+- [ ] Test on iPhone (Safari)
+- [ ] Test on Android (Chrome)
+- [ ] Test on iPad (Safari)
+- [ ] Test on Android tablet
+- [ ] Test notched devices (iPhone X/11)
+- [ ] Test on 5G connection
+- [ ] Test on 3G connection
+- [ ] Test offline (Service Worker)
+
+## Browsers
+- [ ] Chrome Desktop
+- [ ] Firefox Desktop
+- [ ] Safari Desktop
+- [ ] Edge Desktop
+- [ ] Chrome Mobile
+- [ ] Firefox Mobile
+- [ ] Samsung Internet
+
+## Features
+- [ ] Mobile menu works
+- [ ] Smooth scrolling works
+- [ ] File upload works
+- [ ] Copy-paste works
+- [ ] Service Worker installs
+- [ ] PWA installable
+- [ ] Offline mode works
+- [ ] All links work
+- [ ] Forms submit correctly
+- [ ] Images load properly
+
+## Performance
+- [ ] Lighthouse score > 90
+- [ ] FCP < 1.5s
+- [ ] LCP < 2.5s
+- [ ] CLS < 0.1
+- [ ] Bundle size < 100KB
+- [ ] API responses < 1s
+
+## Accessibility
+- [ ] Keyboard navigation works
+- [ ] Screen reader friendly
+- [ ] Color contrast OK
+- [ ] Touch targets >= 44px
+- [ ] Alt text on images
+- [ ] ARIA labels present
+
+## Security
+- [ ] No console errors
+- [ ] No security warnings
+- [ ] HTTPS enforced
+- [ ] CSP headers set
+- [ ] XSS protection enabled

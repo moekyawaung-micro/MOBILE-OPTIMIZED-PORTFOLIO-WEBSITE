@@ -1,0 +1,31 @@
+title: "Moe Kyawaung - Full Stack Engineer"
+description: "Mobile-optimized portfolio with advanced tools"
+author: "Moe Kyawaung"
+url: "https://moekyawaung-micro.github.io"
+baseurl: "/MOBILE-OPTIMIZED-PORTFOLIO-WEBSITE"
+
+# Jekyll settings
+markdown: kramdown
+theme: jekyll-theme-minimal
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+
+# GitHub Pages settings
+safe: true
+lsi: false
+incremental: false
+
+# Build settings
+future: false
+show_drafts: false
+
+# SEO
+twitter:
+  username: moekyawaung
+facebook:
+  app_id: your_app_id
+
+# Analytics
+google_analytics: UA-XXXXX
+XXX-X

@@ -1,0 +1,9 @@
+const formData = new FormData();
+formData.append('file', fileObject);
+
+fetch('/api/upload', {
+    method: 'POST',
+    body: formData
+})
+.then(res => res.json())
+.then(data => console.log(data));

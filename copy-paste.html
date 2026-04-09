@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy & Paste Tool - Moe Kyawaung</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            color: #c9d1d9;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        h1 {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #0969da, #1f6feb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #8b949e;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        /* Tabs -->
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #30363d;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #8b949e;
+            cursor: pointer;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            white-space: nowrap;
+            transition: color 0.3s;
+            min-height: 44px;
+        }
+
+        .tab-btn:active {
+            color: #0969da;
+        }
+
+        .tab-btn.active {
+            color: #0969da;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #0969da;
+        }
+
+        /* Content Area -->
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Text Areas -->
+        .text-area {
+            width: 100%;
+            background: #161b22;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            resize: vertical;
+            min-height: 200px;
+            margin-bottom: 1rem;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .text-area:focus {
+            outline: none;
+            border-color: #0969da;
+            box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
+        }
+
+        .text-area::placeholder {
+            color: #6e7681;
+        }
+
+        /* Buttons -->
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            min-height: 44px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0969da, #1f6feb);
+            color: white;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(9, 105, 218, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(9, 105, 218, 0.1);
+            color: #0969da;
+            border: 1px solid rgba(9, 105, 218, 0.3);
+        }
+
+        .btn-secondary:active {
+            background: rgba(9, 105, 218, 0.15);
+        }
+
+        .btn-danger {
+            background: rgba(218, 54, 51, 0.1);
+            color: #f85149;
+            border: 1px solid rgba(218, 54, 51, 0.3);
+        }
+
+        .btn-danger:active {
+            background: rgba(218, 54, 51, 0.15);
+        }
+
+        /* Character Count -->
+        .char-count {
+            color: #8b949e;
+            font-size: 0.85rem;
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+
+        /* Features -->
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            color: #8b949e;
+            font-size: 0.85rem;
+        }
+
+        /* Toast Notification -->
+        .toast {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: #161b22;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            animation: slideInUp 0.3s ease-out;
+            z-index: 1000;
+            max-width: 90vw;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toast.success {
+            border-color: #238636;
+            background: rgba(35, 134, 54, 0.1);
+            color: #3fb950;
+        }
+
+        .toast.error {
+            border-color: #da3633;
+            background: rgba(218, 54, 51, 0.1);
+            color: #f85149;
+        }
+
+        /* Responsive -->
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                min-width: unset;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .text-area {
+                min-height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Copy & Paste Helper</h1>
+        <p class="subtitle">Easily manage and format your text and code</p>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('text')">📝 Text</button>
+            <button class="tab-btn" onclick="switchTab('code')">💻 Code</button>
+            <button class="tab-btn" onclick="switchTab('data')">📊 Data</button>
+            <button class="tab-btn" onclick="switchTab('tools')">🔧 Tools</button>
+        </div>
+
+        <!-- Text Tab -->
+        <div class="tab-content active" id="text-tab">
+            <textarea class="text-area" id="textInput" placeholder="Paste or type your text here..."></textarea>
+            <div class="char-count">
+                <span id="charCount">0</span> characters | <span id="wordCount">0</span> words
+            </div>
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="copyText()">📋 Copy</button>
+                <button class="btn btn-secondary" onclick="pasteText()">📥 Paste</button>
+                <button class="btn btn-secondary" onclick="clearText()">🗑️ Clear</button>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="convertToUppercase()">AA Uppercase</button>
+                <button class="btn btn-secondary" onclick="convertToLowercase()">aa Lowercase</button>
+                <button class="btn btn-secondary" onclick="reverseText()">⬅️ Reverse</button>
+            </div>
+        </div>
+
+        <!-- Code Tab -->
+        <div class="tab-content" id="code-tab">
+            <select id="codeLanguage" style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px; background: #161b22; color: #c9d1d9; border: 1px solid #30363d; min-height: 44px;">
+                <option value="javascript">JavaScript</option>
+                <option value="python">Python</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="java">Java</option>
+                <option value="cpp">C++</option>
+                <option value="json">JSON</option>
+                <option value="sql">SQL</option>
+            </select>
+            <textarea class="text-area" id="codeInput" placeholder="Paste or type your code here..."></textarea>
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="copyCode()">📋 Copy Code</button>
+                <button class="btn btn-secondary" onclick="pasteCode()">📥 Paste</button>
+                <button class="btn btn-secondary" onclick="formatCode()">✨ Format</button>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="minifyCode()">📦 Minify</button>
+                <button class="btn btn-secondary" onclick="beautifyCode()">🎨 Beautify</button>
+            </div>
+        </div>
+
+        <!-- Data Tab -->
+        <div class="tab-content" id="data-tab">
+            <textarea class="text-area" id="dataInput" placeholder="Paste or type your data here..."></textarea>
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="copyData()">📋 Copy</button>
+                <button class="btn btn-secondary" onclick="convertToJSON()">JSON</button>
+                <button class="btn btn-secondary" onclick="convertToCSV()">CSV</button>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="sortData()">↗️ Sort</button>
+                <button class="btn btn-secondary" onclick="removeDuplicates()">🎯 Remove Duplicates</button>
+            </div>
+        </div>
+
+        <!-- Tools Tab -->
+        <div class="tab-content" id="tools-tab">
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🎲</div>
+                    <div class="feature-title">Generate Password</div>
+                    <div class="feature-desc">Create secure random passwords</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <div class="feature-title">Base64 Encode</div>
+                    <div class="feature-desc">Encode/decode Base64 text</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📏</div>
+                    <div class="feature-title">Text Stats</div>
+                    <div class="feature-desc">Analyze text statistics</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-title">URL Encoder</div>
+                    <div class="feature-desc">Encode/decode URLs</div>
+                </div>
+            </div>
+
+            <textarea class="text-area" id="toolsInput" placeholder="Input for tools..."></textarea>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="generatePassword()">🔐 Generate</button>
+                <button class="btn btn-secondary" onclick="base64Encode()">🔐 Base64 Encode</button>
+                <button class="btn btn-secondary" onclick="base64Decode()">🔓 Base64 Decode</button>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="encodeURL()">🔗 Encode URL</button>
+                <button class="btn btn-secondary" onclick="decodeURL()">🔗 Decode URL</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Character Count
+        document.getElementById('textInput')?.addEventListener('input', function() {
+            const text = this.value;
+            document.getElementById('charCount').textContent = text.length;
+            document.getElementById('wordCount').textContent = text.trim().split(/\s+/).filter(w => w).length;
+        });
+
+        // Copy to Clipboard
+        async function copyToClipboard(text) {
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(text);
+                } else {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                }
+                showToast('✅ Copied to clipboard!', 'success');
+            } catch (error) {
+                showToast('❌ Failed to copy', 'error');
+            }
+        }
+
+        // Paste from Clipboard
+        async function pasteFromClipboard() {
+            try {
+                if (navigator.clipboard && navigator.clipboard.readText) {
+                    return await navigator.clipboard.readText();
+                }
+                showToast('❌ Paste not supported', 'error');
+                return '';
+            } catch (error) {
+                showToast('❌ Failed to paste', 'error');
+                return '';
+            }
+        }
+
+        // Text Functions
+        function copyText() {
+            const text = document.getElementById('textInput').value;
+            copyToClipboard(text);
+        }
+
+        async function pasteText() {
+            const text = await pasteFromClipboard();
+            document.getElementById('textInput').value = text;
+            document.getElementById('textInput').dispatchEvent(new Event('input'));
+        }
+
+        function clearText() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('textInput').dispatchEvent(new Event('input'));
+        }
+
+        function convertToUppercase() {
+            const textarea = document.getElementById('textInput');
+            textarea.value = textarea.value.toUpperCase();
+            copyToClipboard(textarea.value);
+        }
+
+        function convertToLowercase() {
+            const textarea = document.getElementById('textInput');
+            textarea.value = textarea.value.toLowerCase();
+            copyToClipboard(textarea.value);
+        }
+
+        function reverseText() {
+            const textarea = document.getElementById('textInput');
+            textarea.value = textarea.value.split('').reverse().join('');
+            copyToClipboard(textarea.value);
+        }
+
+        // Code Functions
+        function copyCode() {
+            const code = document.getElementById('codeInput').value;
+            copyToClipboard(code);
+        }
+
+        async function pasteCode() {
+            const code = await pasteFromClipboard();
+            document.getElementById('codeInput').value = code;
+        }
+
+        function formatCode() {
+            const code = document.getElementById('codeInput').value;
+            const language = document.getElementById('codeLanguage').value;
+            
+            let formatted = code;
+            if (language === 'json') {
+                try {
+                    formatted = JSON.stringify(JSON.parse(code), null, 2);
+                } catch (e) {
+                    showToast('❌ Invalid JSON', 'error');
+                    return;
+                }
+            }
+            
+            document.getElementById('codeInput').value = formatted;
+            copyToClipboard(formatted);
+        }
+
+        function minifyCode() {
+            const code = document.getElementById('codeInput').value;
+            const minified = code.replace(/\s+/g, ' ').trim();
+            document.getElementById('codeInput').value = minified;
+            copyToClipboard(minified);
+        }
+
+        function beautifyCode() {
+            formatCode();
+        }
+
+        // Data Functions
+        function copyData() {
+            const data = document.getElementById('dataInput').value;
+            copyToClipboard(data);
+        }
+
+        function convertToJSON() {
+            const data = document.getElementById('dataInput').value;
+            try {
+                const json = JSON.stringify(JSON.parse(data), null, 2);
+                document.getElementById('dataInput').value = json;
+                copyToClipboard(json);
+            } catch (e) {
+                showToast('❌ Invalid data format', 'error');
+            }
+        }
+
+        function sortData() {
+            const data = document.getElementById('dataInput').value;
+            const lines = data.split('\n').filter(l => l.trim());
+            lines.sort();
+            const sorted = lines.join('\n');
+            document.getElementById('dataInput').value = sorted;
+            copyToClipboard(sorted);
+        }
+
+        function removeDuplicates() {
+            const data = document.getElementById('dataInput').value;
+            const lines = data.split('\n').filter(l => l.trim());
+            const unique = [...new Set(lines)];
+            const result = unique.join('\n');
+            document.getElementById('dataInput').value = result;
+            copyToClipboard(result);
+        }
+
+        // Tools Functions
+        function generatePassword() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+            let password = '';
+            for (let i = 0; i < 16; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('toolsInput').value = password;
+            copyToClipboard(password);
+        }
+
+        function base64Encode() {
+            const text = document.getElementById('toolsInput').value;
+            const encoded = btoa(unescape(encodeURIComponent(text)));
+            document.getElementById('toolsInput').value = encoded;
+            copyToClipboard(encoded);
+        }
+
+        function base64Decode() {
+            const text = document.getElementById('toolsInput').value;
+            try {
+                const decoded = decodeURIComponent(escape(atob(text)));
+                document.getElementById('toolsInput').value = decoded;
+                copyToClipboard(decoded);
+            } catch (e) {
+                showToast('❌ Invalid Base64', 'error');
+            }
+        }
+
+        function encodeURL() {
+            const url = document.getElementById('toolsInput').value;
+            const encoded = encodeURIComponent(url);
+            document.getElementById('toolsInput').value = encoded;
+            copyToClipboard(encoded);
+        }
+
+        function decodeURL() {
+            const url = document.getElementById('toolsInput').value;
+            try {
+                const decoded = decodeURIComponent(url);
+                document.getElementById('toolsInput').value = decoded;
+                copyToClipboard(decoded);
+            } catch (e) {
+                showToast('❌ Invalid URL encoding', 'error');
+            }
+        }
+
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Clipboard Event Listeners
+        document.addEventListener('paste', async (e) => {
+            if (document.activeElement.tagName === 'TEXTAREA') {
+                const text = await pasteFromClipboard();
+                if (text) {
+                    showToast('✅ Pasted from clipboard', 'success');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
